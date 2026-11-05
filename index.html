@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عجلة حظ JO garage</title>
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',Tahoma}
+body{margin:0;background:#0a0a0a;color:#fff;text-align:center;padding:15px}
+.wrap{max-width:450px;margin:auto}
+h1{color:#ffcc00;font-size:38px;margin:5px 0;line-height:1}
+h1 span{display:block;color:#fff;font-size:16px}
+.badge{background:#ffcc00;color:#000;padding:7px 14px;border-radius:20px;font-weight:bold;display:inline-block;margin:10px 0}
+.try-badge{background:#222;border:1px solid #ffcc00;color:#ffcc00;padding:6px 12px;border-radius:20px;font-size:14px;display:inline-block;margin-bottom:5px}
+.card{background:#1a1a1a;border:2px solid #ffcc00;border-radius:22px;padding:20px}
+input{width:100%;padding:14px;border-radius:12px;border:2px solid #333;background:#fff;color:#000;font-size:18px;text-align:center;margin:10px 0;outline:none}
+input.error{border-color:#ff0000;box-shadow:0 0 0 3px #ff000033;animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#nameError{display:none;color:#ff5555;font-size:14px;margin:-5px 0 5px;font-weight:bold}
+.pointer{width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:28px solid #fff;margin:0 auto -8px;position:relative;z-index:10;filter:drop-shadow(0 2px 3px #000)}
+#wheel{width:270px;height:270px;border-radius:50%;border:8px solid #ffcc00;margin:0 auto 15px;position:relative;overflow:hidden;transition:transform 4s cubic-bezier(.15,.8,.15,1);background:conic-gradient(#ffcc00 0 60deg,#1a1a1a 60deg 120deg,#ffcc00 120deg 180deg,#1a1a1a 180deg 240deg,#ffcc00 240deg 300deg,#1a1a1a 300deg 360deg)}
+.w-label{position:absolute;left:50%;top:50%;width:64px;margin-left:-32px;margin-top:-10px;text-align:center;font-weight:bold;font-size:12px;line-height:1.2;pointer-events:none}
+.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:#000;border:3px solid #ffcc00;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;z-index:5}
+button{width:100%;padding:15px;border:none;border-radius:14px;font-size:20px;font-weight:bold;cursor:pointer}
+.btn-spin{background:#ffcc00}
+.btn-spin:disabled{background:#555;color:#aaa}
+.btn-wa{background:#25D366;color:#fff;margin-top:10px}
+.btn-call{background:#fff;color:#000;margin-top:10px}
+.btn-fb{background:#1877F2;color:#fff;margin-top:10px}
+#result{display:none;background:#fff;color:#000;border-radius:16px;padding:20px;margin-top:15px}
+#result h2{font-size:30px;margin:5px 0}
+.code{background:#000;color:#ffcc00;padding:10px;border-radius:10px;font-size:22px;font-weight:bold;letter-spacing:2px;margin:10px 0}
+.steps{text-align:right;background:#fff3cd;color:#000;border-radius:12px;padding:12px;margin-top:12px;font-size:15px;line-height:1.8}
+.mini-box{width:150px;margin:18px auto 5px;background:#111;border:1px solid #333;border-radius:10px;padding:8px}
+.mini-box a{color:#999;text-decoration:none;font-size:12px;display:block}
+.mini-box span{font-size:11px;color:#666}
+small{color:#888}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>JO garage<span>مغسلة المنصورة ✨</span></h1>
+<div class="badge">🎡 عجلة الحظ - ليك 3 فرص بس 🎡</div>
+<br>
+<div class="try-badge" id="tryText">فاضلك 3 فرص 🎡</div>
+<div class="card">
+<p>لف العجلة، يا تكسب خصم 20% يا حظك يخيب<br>ركز، ليك <b>3 فرص بس</b></p>
+<input id="name" placeholder="اكتب اسمك الاول عشان تلف... *" oninput="this.classList.remove('error');document.getElementById('nameError').style.display='none'">
+<div id="nameError">⚠️ اكتب اسمك الاول عشان تلف العجلة</div>
+<div class="pointer"></div>
+<div id="wheel">
+<div class="w-label" style="color:#000;transform:rotate(30deg) translateY(-78px)">خصم<br>20% 🔥</div>
+<div class="w-label" style="color:#fff;transform:rotate(90deg) translateY(-78px)">حظ<br>أوفر 😢</div>
+<div class="w-label" style="color:#000;transform:rotate(150deg) translateY(-78px)">خصم<br>20% 🔥</div>
+<div class="w-label" style="color:#fff;transform:rotate(210deg) translateY(-78px)">حظ<br>أوفر 😢</div>
+<div class="w-label" style="color:#000;transform:rotate(270deg) translateY(-78px)">خصم<br>20% 🔥</div>
+<div class="w-label" style="color:#fff;transform:rotate(330deg) translateY(-78px)">حظ<br>أوفر 😢</div>
+<div class="center">🎡</div>
+</div>
+<button class="btn-spin" id="spinBtn" onclick="spin()">لف العجلة دلوقتي 🔥</button>
+
+<div id="result">
+<p id="res-text"></p>
+<h2 id="res-title"></h2>
+<div id="win-part">
+<p>كود الخصم بتاعك:</p>
+<div class="code" id="code">JO20-XXXX</div>
+<div class="steps">
+<b>عشان تاخد الخصم اعمل كده:</b><br>
+1. خد سكرين شوت للشاشة دي 📸<br>
+2. نزلها ستوري عندك<br>
+3. اعمل منشن لـ <b>@JO garage</b> في الستوري<br>
+4. تعالى المغسلة ووريهم الكود
+</div>
+</div>
+<div id="lose-part" style="display:none">
+<p id="lose-msg" style="font-size:18px"></p>
+</div>
+</div>
+
+<button class="btn-wa" onclick="goWA()" id="waBtn" style="display:none">ابعت الكود واتساب واحجز 📲 01005030101</button>
+<button class="btn-call" onclick="window.location.href='tel:01005030101'">اتصل بالمغسلة 📞 01005030101</button>
+<button class="btn-fb" onclick="share()">شير لصاحبك يجرب حظه 📣</button>
+
+</div>
+<p><small>رقم المغسلة: 01005030101</small></p>
+
+<div class="mini-box">
+<a href="https://www.facebook.com/profile.php?id=61596205863611" target="_blank">Web App ✨</a>
+<span>made by Web App</span>
+</div>
+
+</div>
+
+<script>
+let deg=0;
+let canSpin=true;
+let attempts = parseInt(localStorage.getItem('jo_attempts_v3')||'0');
+let hasWon = localStorage.getItem('jo_won_v3')==='1';
+
+function updateTryText(){
+let left = 3 - attempts;
+let el = document.getElementById('tryText');
+let btn = document.getElementById('spinBtn');
+if(hasWon){
+el.innerText='كسبت خلاص 🎉 مبروك';
+btn.disabled=true; btn.innerText='انت كسبت خلاص 🔥';
+}else if(left<=0){
+el.innerText='خلصت فرصك 😢';
+btn.disabled=true; btn.innerText='خلصت فرصك ❌';
+}else if(left===1){
+el.innerText='فاضلك محاولة واحدة بس ☝️ ركز';
+}else if(left===2){
+el.innerText='فاضلك محاولتين ✌️';
+}else{
+el.innerText='فاضلك 3 فرص 🎡';
+}
+}
+updateTryText();
+
+function spin(){
+if(!canSpin) return;
+if(attempts>=3 || hasWon) return;
+let nameInput=document.getElementById('name');
+let name=nameInput.value.trim();
+if(name.length < 2){
+nameInput.classList.add('error');
+document.getElementById('nameError').style.display='block';
+nameInput.focus();
+return;
+}
+nameInput.classList.remove('error');
+document.getElementById('nameError').style.display='none';
+canSpin=false;
+let win = Math.random() < 0.3;
+let centersWin=[30,150,270];
+let centersLose=[90,210,330];
+let center = win ? centersWin[Math.floor(Math.random()*3)] : centersLose[Math.floor(Math.random()*3)];
+let targetAngle = (360 - center) % 360;
+let currentMod = deg % 360;
+let add = (360 - currentMod + targetAngle) % 360;
+deg += 1440 + add;
+document.getElementById('wheel').style.transform='rotate('+deg+'deg)';
+attempts++;
+localStorage.setItem('jo_attempts_v3', attempts);
+setTimeout(()=>{
+document.getElementById('result').style.display='block';
+if(win){
+hasWon=true; localStorage.setItem('jo_won_v3','1');
+let code='JO20-'+Math.floor(1000+Math.random()*9000);
+document.getElementById('res-text').innerText='مبروووك يا '+name+' 🎉';
+document.getElementById('res-title').innerText='كسبت خصم 20%';
+document.getElementById('res-title').style.color='#e60000';
+document.getElementById('code').innerText=code;
+document.getElementById('win-part').style.display='block';
+document.getElementById('lose-part').style.display='none';
+document.getElementById('waBtn').style.display='block';
+window.myCode=code; window.myName=name;
+}else{
+document.getElementById('res-text').innerText='هارد لك يا '+name;
+document.getElementById('res-title').innerText='حظ أوفر 😢';
+document.getElementById('res-title').style.color='#000';
+document.getElementById('win-part').style.display='none';
+document.getElementById('lose-part').style.display='block';
+if(attempts>=3){
+document.getElementById('lose-msg').innerText='خلصت فرصك يا بطل 😢 ليك 3 فرص بس، ابعت لصاحبك يجرب حظه.';
+}else{
+document.getElementById('lose-msg').innerText='لسه فاضلك '+(3-attempts)+' محاولة، جرب تاني يمكن تكسب.';
+canSpin=true;
+}
+}
+updateTryText();
+},4100);
+}
+function goWA(){
+let msg='انا '+(window.myName||'')+' كسبت خصم 20% في عجلة JO garage والكود بتاعي: '+(window.myCode||'JO20')+' عايز احجز';
+window.open('https://wa.me/201005030101?text='+encodeURIComponent(msg));
+}
+function share(){
+let url = location.href;
+let text = 'جرب حظك في عجلة JO garage 🔥 ليك 3 فرص تكسب خصم 20% - ' + url;
+if(navigator.share){
+navigator.share({title:'عجلة حظ JO garage', text:text, url:url}).catch(()=>{copyAndWA(text)});
+}else{
+copyAndWA(text);
+}
+}
+function copyAndWA(text){
+if(navigator.clipboard){
+navigator.clipboard.writeText(location.href).then(()=>{alert('تم نسخ اللينك، ابعته لصاحبك 📋');});
+}
+window.open('https://wa.me/?text='+encodeURIComponent(text));
+}
+</script>
+</body>
+</html>
